@@ -242,6 +242,8 @@ const q=$('#quill');let lt=0;addEventListener('mousemove',e=>{q.style.left=e.cli
 function tex(){const c=document.createElement('canvas');c.width=512;c.height=700;const x=c.getContext('2d');x.fillStyle='#e6d3a8';x.fillRect(0,0,512,700);const g=x.createRadialGradient(256,350,100,256,350,420);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(110,60,20,.55)');x.fillStyle=g;x.fillRect(0,0,512,700);x.fillStyle='#2b1a0e';x.textAlign='center';x.font='64px UnifrakturCook';x.fillText('Message',256,90);x.font='700 34px Cinzel';x.fillText('CHRONICLES',256,134);x.fillRect(30,148,452,3);x.fillRect(30,155,452,1);x.font='700 26px "Playfair Display"';x.fillText('A NEW ERA BEGINS',256,200);for(let r=0;r<2;r++)for(let col=0;col<3;col++){for(let l=0;l<20;l++){x.fillRect(34+col*152,240+l*20+r*0,130-(l%5)*6,3)}}x.fillStyle='#8a5a22';x.fillRect(34,250,130,90);return new THREE.CanvasTexture(c)}
 function paper(t){const m=new THREE.MeshStandardMaterial({map:t,roughness:.9}),e=new THREE.MeshStandardMaterial({color:0xcdb88a});return new THREE.Mesh(new THREE.BoxGeometry(2.2,3,.06),[e,e,e,e,m,m])}
 function scene(cv,n){const r=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});const s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,1,.1,50);cam.position.z=7;s.add(new THREE.AmbientLight(0xffe2b0,.8));const l=new THREE.DirectionalLight(0xffd9a0,1.4);l.position.set(3,4,5);s.add(l);const t=tex(),g=new THREE.Group(),ps=[];for(let i=0;i<n;i++){const p=paper(t);p.position.set(i*.05,-i*.05,-i*.09);p.rotation.z=(i-n/2)*.05;g.add(p);ps.push(p)}s.add(g);
+
+                
 const N=140,pg=new THREE.BufferGeometry(),pos=new Float32Array(N*3);for(let i=0;i<N*3;i++)pos[i]=(Math.random()-.5)*10;pg.setAttribute('position',new THREE.BufferAttribute(pos,3));const dust=new THREE.Points(pg,new THREE.PointsMaterial({color:0xe6c88a,size:.05,transparent:true,opacity:.8}));s.add(dust);
 const o={r,s,cam,g,dust,mx:0,my:0};function rs(){const w=cv.clientWidth,h=cv.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}rs();addEventListener('resize',rs);return o}
 const L=scene($('#lc'),1),H=scene($('#hc'),4);
@@ -251,6 +253,8 @@ H.g.rotation.y+=((H.mx*1.2-.3)-H.g.rotation.y)*.06;H.g.rotation.x+=((H.my*.8)-H.
 /* loading sequence */
 const ldTxt=$('#lt'),bar=$('#bar i');let p=0;
 document.fonts.ready.then(()=>{const iv=setInterval(()=>{p+=Math.random()*5+1.5;bar.style.width=Math.min(p,100)+'%';if(p>=100){clearInterval(iv);ldTxt.textContent='STOP THE PRESSES!';ldTxt.className='stop';ping();setTimeout(()=>{$('#loader').classList.add('done');type()},1500)}},60)});
+
+
 </script>
 </body>
 </html>
